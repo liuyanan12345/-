@@ -6,151 +6,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#4CAF50">
-    <title>无限二项式贪吃蛇</title>
+    <title>二项式贪吃蛇</title>
     <style>
-        /* 基础样式 */
-        body { 
-            margin: 0; 
-            padding: 0; 
-            min-height: 100vh;
-            background: #f0f0f0;
-            font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
-        }
-
-        /* 页面容器 */
-        .page-container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-        .active-page {
-            display: flex;
-        }
-
-        /* 规则页面 */
-        #rulePage .card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            max-width: 500px;
-            text-align: center;
-        }
-        #rulePage h2 {
-            color: #2c3e50;
-            margin: 0 0 20px;
-        }
-        #rulePage ul {
-            text-align: left;
-            padding: 0 20px;
-            margin: 0 0 25px;
-        }
-        #rulePage li {
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-
-        /* 难度选择页面 */
-        #difficultyPage .card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            max-width: 500px;
-            width: 100%;
-        }
-        .difficulty-buttons {
-            display: grid;
-            gap: 15px;
-        }
-        .difficulty-btn {
-            background: #2196F3;
-            color: white;
-            border: none;
-            padding: 18px;
-            border-radius: 12px;
-            font-size: 17px;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .difficulty-btn:active {
-            transform: scale(0.97);
-        }
-
-        /* 游戏页面 */
-        #gamePage {
-            padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-        .info {
-            width: 95vw;
-            max-width: 375px;
-            padding: 12px;
-            margin: 8px 0;
-            background: white;
-            text-align: center;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .game-area {
-            width: 95vw;
-            max-width: 375px;
-            aspect-ratio: 1;
-            margin: 10px auto;
-            border: 3px solid #607D8B;
-            border-radius: 12px;
-            background: #FFF;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        canvas {
-            width: 100%;
-            height: 100%;
-            touch-action: manipulation;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-        .controls {
-            width: 95vw;
-            max-width: 375px;
-            padding: 10px 0;
-            margin-top: auto;
-            background: #fff;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-        .direction-pad {
-            display: grid;
-            grid-template-areas: 
-                ". up ."
-                "left . right"
-                ". down .";
-            gap: 8px;
-            padding: 0 12px;
-            margin-bottom: 12px;
-        }
-        .action-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            padding: 0 12px;
-        }
-        button {
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            background: #4CAF50;
-            color: white;
-            font-size: 16px;
-            touch-action: manipulation;
-            min-height: 50px;
-            transition: transform 0.1s;
-            -webkit-tap-highlight-color: transparent;
-        }
+        body { margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; background: #f0f0f0; touch-action: none; align-items: center; font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+        .info { width: 95vw; max-width: 375px; padding: 12px; margin: 8px 0; background: white; text-align: center; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .game-area { width: 95vw; max-width: 375px; aspect-ratio: 1; margin: 10px auto; border: 3px solid #607D8B; border-radius: 12px; background: #FFF; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; }
+        canvas { width: 100%; height: 100%; touch-action: manipulation; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+        .controls { width: 95vw; max-width: 375px; padding: 10px 0; margin-top: auto; background: #fff; box-shadow: 0 -4px 12px rgba(0,0,0,0.1); padding-bottom: env(safe-area-inset-bottom); }
+        .direction-pad { display: grid; grid-template-areas: ". up ." "left . right" ". down ."; gap: 8px; padding: 0 12px; margin-bottom: 12px; }
+        .action-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 12px; }
+        button { padding: 14px; border: none; border-radius: 10px; background: #4CAF50; color: white; font-size: 16px; touch-action: manipulation; min-height: 50px; transition: transform 0.1s; -webkit-tap-highlight-color: transparent; }
         #restartBtn { background: #2196F3; }
         #startPauseBtn { background: #8BC34A; }
         button:active { transform: scale(0.95); }
@@ -158,109 +23,51 @@
         #downBtn { grid-area: down; }
         #leftBtn { grid-area: left; }
         #rightBtn { grid-area: right; }
-        #message {
-            color: #666;
-            font-size: 13px;
-            margin-top: 6px;
-            line-height: 1.4;
-        }
-        .time-info {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-        }
+        #message { color: #666; font-size: 13px; margin-top: 6px; line-height: 1.4; }
+        .time-info { display: flex; justify-content: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
         .time-info span { white-space: nowrap; }
-
-        @media (max-width: 375px) {
-            button { padding: 12px; font-size: 15px; }
-            .info { font-size: 14px; }
-            #message { font-size: 12px; }
-        }
+        @media (hover: none) { button { min-height: 60px; font-size: 20px; } }
+        @media (max-width: 375px) { button { padding: 12px; font-size: 15px; min-height: 48px; } .info { font-size: 14px; } #message { font-size: 12px; } .time-info { gap: 8px; } }
     </style>
 </head>
 <body>
-    <!-- 规则页面 -->
-    <div id="rulePage" class="page-container active-page">
-        <div class="card">
-            <h2>游戏规则</h2>
-            <ul>
-                <li>按正确顺序吃掉二项式展开项</li>
-                <li>正确+100分，错误累计错误次数</li>
-                <li>碰撞自身会结束游戏</li>
-                <li>边界可以穿越</li>
-                <li>每个难度包含8个关卡</li>
-                <li>完成当前难度自动进入下一难度</li>
-            </ul>
-            <button id="startGameBtn" style="width:100%">开始游戏</button>
+    <div class="info">
+        <div class="time-info">
+            <span>时间: <span id="timer">00:00</span></span>
+            <span>关卡: <span id="level">1</span></span>
+            <span>得分: <span id="score">0</span></span>
+            <span>错误: <span id="errors">0</span></span>
         </div>
+        <div id="message"></div>
     </div>
-
-    <!-- 难度选择页面 -->
-    <div id="difficultyPage" class="page-container">
-        <div class="card">
-            <h2>选择难度</h2>
-            <div class="difficulty-buttons">
-                <button class="difficulty-btn" data-difficulty="1">初级（1-8关）</button>
-                <button class="difficulty-btn" data-difficulty="2">中级（9-16关）</button>
-            </div>
-        </div>
+    <div class="game-area">
+        <canvas id="gameCanvas"></canvas>
     </div>
-
-    <!-- 游戏页面 -->
-    <div id="gamePage" class="page-container">
-        <div class="info">
-            <div class="time-info">
-                <span>时间: <span id="timer">00:00</span></span>
-                <span>关卡: <span id="level">1</span></span>
-                <span>得分: <span id="score">0</span></span>
-                <span>错误: <span id="errors">0</span></span>
-            </div>
-            <div id="message"></div>
+    <div class="controls">
+        <div class="direction-pad">
+            <button id="upBtn">↑</button>
+            <button id="leftBtn">←</button>
+            <button id="rightBtn">→</button>
+            <button id="downBtn">↓</button>
         </div>
-        <div class="game-area">
-            <canvas id="gameCanvas"></canvas>
-        </div>
-        <div class="controls">
-            <div class="direction-pad">
-                <button id="upBtn">↑</button>
-                <button id="leftBtn">←</button>
-                <button id="rightBtn">→</button>
-                <button id="downBtn">↓</button>
-            </div>
-            <div class="action-buttons">
-                <button id="startPauseBtn">开始</button>
-                <button id="restartBtn">重玩</button>
-            </div>
+        <div class="action-buttons">
+            <button id="startPauseBtn">开始</button>
+            <button id="restartBtn">重玩</button>
         </div>
     </div>
 
 <script>
-// 页面控制逻辑
-function showPage(pageId) {
-    document.querySelectorAll('.page-container').forEach(p => p.classList.remove('active-page'));
-    document.getElementById(pageId).classList.add('active-page');
-}
-
-// 初始化事件
-document.getElementById('startGameBtn').addEventListener('click', () => showPage('difficultyPage'));
-document.querySelectorAll('.difficulty-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        window.currentDifficulty = parseInt(this.dataset.difficulty);
-        showPage('gamePage');
-        initGameSystem();
-    });
-});
-
-// 游戏核心逻辑
 const GRID_COUNT = 10;
-let GRID_SIZE, levels = [];
+let GRID_SIZE;
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-let gameState, food, isPaused, currentLevel;
-let startTime = 0, elapsedTime = 0, timerInterval = null;
 
+// 计时器相关变量
+let startTime = 0;
+let elapsedTime = 0;
+let timerInterval = null;
+
+// 上标字符映射
 const superscriptMap = {
     '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
     '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
@@ -273,8 +80,8 @@ class GameState {
     }
     
     fullReset() {
-        this.totalScore = 0;
-        this.totalErrors = 0;
+        this.totalScore = 0;   // 累计总分
+        this.totalErrors = 0;  // 累计总错误
         this.resetLevel();
     }
     
@@ -283,63 +90,50 @@ class GameState {
         this.direction = 'right';
         this.nextDirection = 'right';
         this.currentFoodIndex = 0;
-        this.levelScore = 0;
-        this.levelErrors = 0;
+        this.levelScore = 0;    // 当前关卡得分
+        this.levelErrors = 0;   // 当前关卡错误
     }
 }
 
+const gameState = new GameState();
+let food = [], isPaused = true, currentLevel = 0;
+const BASE_SPEED = 260;
+
+// 生成带系数的二项式项
 function generateBinomialTerms(n) {
     const terms = [];
-    const formatExponent = num => 
-        num > 1 ? num.toString().split('').map(c => superscriptMap[c]).join('') : '';
-    
+    const formatExponent = (num) => {
+        return num > 1 ? num.toString().split('').map(c => superscriptMap[c] || c).join('') : '';
+    };
+
     for (let k = 0; k <= n; k++) {
         const coeff = combination(n, k);
         const aExp = n - k;
         const bExp = k;
-        let term = coeff > 1 ? coeff : '';
+
+        let term = '';
+        if (coeff > 1 || (aExp === 0 && bExp === 0)) term += coeff;
         if (aExp > 0) term += `a${formatExponent(aExp)}`;
         if (bExp > 0) term += `b${formatExponent(bExp)}`;
-        terms.push(term || '1');
+        terms.push(term);
     }
     return terms;
 }
 
 function combination(n, k) {
     if (k < 0 || k > n) return 0;
+    if (k === 0 || k === n) return 1;
     k = Math.min(k, n - k);
     let result = 1;
-    for (let i = 1; i <= k; i++) 
+    for (let i = 1; i <= k; i++) {
         result = result * (n - k + i) / i;
+    }
     return Math.round(result);
 }
 
-function generateLevels(difficulty) {
-    const start = (difficulty - 1) * 8 + 1;
-    return Array.from({length: 8}, (_, i) => ({
-        foods: generateBinomialTerms(start + i)
-    }));
-}
-
-function initGameSystem() {
-    // 初始化游戏状态
-    gameState = new GameState();
-    levels = generateLevels(window.currentDifficulty);
-    currentLevel = 0;
-    isPaused = true;
-    
-    // 重置计时器
-    clearInterval(timerInterval);
-    elapsedTime = 0;
-    document.getElementById('timer').textContent = '00:00';
-    
-    // 初始化画布
-    resizeCanvas();
-    generateFood();
-    updateDisplay();
-    showMessage(`当前难度: ${window.currentDifficulty} 公式: (a+b)${superscriptMap[(window.currentDifficulty-1)*8 + currentLevel +1]}`);
-    draw();
-}
+const levels = Array.from({length: 8}, (_, i) => ({
+    foods: generateBinomialTerms(i + 1)
+}));
 
 function resizeCanvas() {
     const container = document.querySelector('.game-area');
@@ -359,130 +153,65 @@ window.addEventListener('resize', () => {
     document.activeElement.blur();
     setTimeout(resizeCanvas, 100);
 });
+window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 100));
+resizeCanvas();
 
 function generateFood() {
     const occupied = new Set(gameState.snake.map(p => `${p.x},${p.y}`));
-    const available = [];
+    const padding = Math.min(1, Math.floor(currentLevel/3));
     
-    for(let x = 0; x < GRID_COUNT; x++) {
-        for(let y = 0; y < GRID_COUNT; y++) {
-            if (!occupied.has(`${x},${y}`)) available.push({x, y});
+    const available = [];
+    for(let x = padding; x < GRID_COUNT - padding; x++) {
+        for(let y = padding; y < GRID_COUNT - padding; y++) {
+            const pos = `${x},${y}`;
+            if(!occupied.has(pos)) available.push({x, y});
         }
     }
     
     available.sort(() => Math.random() - 0.5);
-    food = levels[currentLevel].foods.map((label, i) => ({
-        ...available[i % available.length],
-        label,
-        eaten: false
-    }));
-}
-
-// 游戏逻辑核心
-let lastUpdate = 0;
-function gameLoop(timestamp) {
-    if (!isPaused) {
-        const delta = timestamp - lastUpdate;
-        if (delta > getLevelSpeed()) {
-            update();
-            lastUpdate = timestamp;
-        }
-        requestAnimationFrame(gameLoop);
-    }
-}
-
-function update() {
-    const head = {...gameState.snake[0]};
-    switch(gameState.direction) {
-        case 'up': head.y--; break;
-        case 'down': head.y++; break;
-        case 'left': head.x--; break;
-        case 'right': head.x++; break;
-    }
-
-    // 边界处理
-    head.x = (head.x + GRID_COUNT) % GRID_COUNT;
-    head.y = (head.y + GRID_COUNT) % GRID_COUNT;
-
-    // 碰撞检测
-    if (gameState.snake.slice(1).some(s => s.x === head.x && s.y === head.y)) {
-        gameOver();
-        return;
-    }
-
-    let ateCorrect = false;
-    food.forEach(f => {
-        if (!f.eaten && f.x === head.x && f.y === head.y) {
-            if (f.label === levels[currentLevel].foods[gameState.currentFoodIndex]) {
-                handleCorrectFood(f);
-                ateCorrect = true;
-            } else {
-                handleWrongFood();
-            }
-        }
+    food = levels[currentLevel].foods.map((label, i) => {
+        const pos = available[i % available.length];
+        occupied.add(`${pos.x},${pos.y}`);
+        return { ...pos, label, eaten: false };
     });
-
-    gameState.snake.unshift(head);
-    if (!ateCorrect) gameState.snake.pop();
-    draw();
 }
 
-function handleCorrectFood(f) {
-    f.eaten = true;
-    gameState.currentFoodIndex++;
-    gameState.levelScore += 100;
-    
-    if (gameState.currentFoodIndex === levels[currentLevel].foods.length) {
-        gameState.totalScore += gameState.levelScore;
-        
-        if (currentLevel < levels.length - 1) {
-            currentLevel++;
-        } else {
-            window.currentDifficulty++;
-            levels.push(...generateLevels(window.currentDifficulty));
-            currentLevel++;
-        }
-        
-        gameState.resetLevel();
-        generateFood();
-        showMessage(`进入第 ${currentLevel + 1} 关！公式: (a+b)${superscriptMap[(window.currentDifficulty-1)*8 + currentLevel +1]}`);
-    }
-    
-    updateDisplay();
-}
-
-function handleWrongFood() {
-    gameState.levelErrors++;
-    showMessage("吃错顺序了！", true);
-    updateDisplay();
-}
-
-function gameOver() {
-    gameState.totalScore += gameState.levelScore;
-    gameState.totalErrors += gameState.levelErrors;
-    showMessage(`游戏结束！累计得分: ${gameState.totalScore} 累计错误: ${gameState.totalErrors}`);
-    isPaused = true;
-    stopTimer();
-    document.getElementById('startPauseBtn').textContent = '开始';
-    draw();
-}
-
-// 找到并替换原来的getLevelSpeed函数
-function getLevelSpeed() {
-    return 260; // 始终返回基础速度，不再根据关卡调整
-}
-
+// 计时器功能
 function startTimer() {
     startTime = Date.now() - elapsedTime;
     timerInterval = setInterval(() => {
         elapsedTime = Date.now() - startTime;
-        document.getElementById('timer').textContent = 
-            `${Math.floor(elapsedTime/60000).toString().padStart(2,'0')}:${Math.floor((elapsedTime%60000)/1000).toString().padStart(2,'0')}`;
+        updateTimerDisplay();
     }, 1000);
 }
 
 function stopTimer() {
     clearInterval(timerInterval);
+}
+
+function resetTimer() {
+    clearInterval(timerInterval);
+    elapsedTime = 0;
+    updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+    const totalSeconds = Math.floor(elapsedTime / 1000);
+    const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+    const seconds = (totalSeconds % 60).toString().padStart(2, '0');
+    document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+}
+
+function initGame() {
+    gameState.resetLevel();
+    currentLevel = 0;
+    isPaused = true;
+    resetTimer();
+    generateFood();
+    updateDisplay();
+    showMessage(`当前公式: (a+b)${superscriptMap[currentLevel+1]}  需要顺序: ${levels[currentLevel].foods.join(' → ')}`);
+    document.getElementById('startPauseBtn').textContent = '开始';
+    draw();
 }
 
 function updateDisplay() {
@@ -494,16 +223,17 @@ function updateDisplay() {
 function showMessage(msg, isError = false) {
     const el = document.getElementById('message');
     el.textContent = msg;
-    el.style.color = isError ? '#d32f2f' : '#666';
+    el.style.color = isError ? '#D32F2F' : '#666';
     if (isError && navigator.vibrate) navigator.vibrate(200);
 }
 
-// 绘制函数
 function draw() {
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // 绘制蛇身
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(2, 2, canvas.width-4, canvas.height-4);
+    ctx.strokeStyle = '#B0BEC5';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(4, 4, canvas.width-8, canvas.height-8);
+
     gameState.snake.forEach((seg, i) => {
         const size = GRID_SIZE - 4 + (i === 0 ? 8 : 0);
         ctx.fillStyle = `hsl(${120 + i * 5}, 70%, 50%)`;
@@ -518,22 +248,21 @@ function draw() {
         ctx.fill();
     });
 
-    // 绘制食物
     food.forEach(f => {
         if (!f.eaten) {
-            ctx.fillStyle = '#ffeb3b';
+            ctx.fillStyle = '#FFEB3B';
             ctx.beginPath();
             ctx.roundRect(
                 f.x * GRID_SIZE + 2,
                 f.y * GRID_SIZE + 2,
                 GRID_SIZE - 4,
                 GRID_SIZE - 4,
-                6
+                8
             );
             ctx.fill();
             
             ctx.fillStyle = '#000';
-            ctx.font = `bold ${GRID_SIZE*0.4}px Arial`;
+            ctx.font = `bold ${Math.min(GRID_SIZE*0.5, 24)}px Arial`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(f.label, 
@@ -544,7 +273,76 @@ function draw() {
     });
 }
 
-// 控制逻辑
+function update() {
+    const head = {...gameState.snake[0]};
+    switch(gameState.direction) {
+        case 'up': head.y--; break;
+        case 'down': head.y++; break;
+        case 'left': head.x--; break;
+        case 'right': head.x++; break;
+    }
+
+    // 边界穿越处理
+    if (head.x < 0) head.x = GRID_COUNT - 1;
+    if (head.x >= GRID_COUNT) head.x = 0;
+    if (head.y < 0) head.y = GRID_COUNT - 1;
+    if (head.y >= GRID_COUNT) head.y = 0;
+
+    // 自身碰撞检测
+    if (gameState.snake.slice(1).some(s => s.x === head.x && s.y === head.y)) {
+        gameState.levelErrors++;
+        gameOver();
+        return;
+    }
+
+    let ateCorrect = false;
+    food.forEach(f => {
+        if (!f.eaten && f.x === head.x && f.y === head.y) {
+            if (f.label === levels[currentLevel].foods[gameState.currentFoodIndex]) {
+                f.eaten = true;
+                gameState.currentFoodIndex++;
+                gameState.levelScore += 100;
+                ateCorrect = true;
+                updateDisplay();
+                
+                if (gameState.currentFoodIndex === levels[currentLevel].foods.length) {
+                    gameState.totalScore += gameState.levelScore;
+                    gameState.totalErrors += gameState.levelErrors;
+
+                    if (currentLevel < levels.length-1) {
+                        currentLevel++;
+                        gameState.resetLevel();
+                        generateFood();
+                        showMessage(`升级！累计得分: ${gameState.totalScore} 累计错误: ${gameState.totalErrors}`);
+                    } else {
+                        showMessage(`🎉 通关！总分: ${gameState.totalScore} 总错误: ${gameState.totalErrors}`);
+                        isPaused = true;
+                        stopTimer();
+                    }
+                }
+            } else {
+                gameState.levelErrors++;
+                showMessage("吃错顺序了！", true);
+                updateDisplay();
+            }
+        }
+    });
+
+    gameState.snake.unshift(head);
+    if (!ateCorrect) gameState.snake.pop();
+    draw();
+}
+
+function gameOver() {
+    gameState.totalScore += gameState.levelScore;
+    gameState.totalErrors += gameState.levelErrors;
+    showMessage(`游戏结束！累计得分: ${gameState.totalScore} 累计错误: ${gameState.totalErrors}`);
+    isPaused = true;
+    stopTimer();
+    document.getElementById('startPauseBtn').textContent = '开始';
+    draw();
+}
+
 const validTransitions = {
     up: ['left', 'right'],
     down: ['left', 'right'],
@@ -554,32 +352,12 @@ const validTransitions = {
 
 function setDirection(newDir) {
     if (validTransitions[gameState.direction].includes(newDir)) {
+        gameState.nextDirection = newDir;
         gameState.direction = newDir;
     }
 }
 
-document.getElementById('startPauseBtn').addEventListener('click', () => {
-    if (isPaused) {
-        isPaused = false;
-        document.getElementById('startPauseBtn').textContent = '暂停';
-        startTimer();
-        lastUpdate = performance.now();
-        gameLoop(lastUpdate);
-    } else {
-        isPaused = true;
-        document.getElementById('startPauseBtn').textContent = '继续';
-        stopTimer();
-    }
-});
-
-document.getElementById('restartBtn').addEventListener('click', () => {
-    gameState.fullReset();
-    currentLevel = 0;
-    initGameSystem();
-    document.getElementById('startPauseBtn').textContent = '开始';
-});
-
-// 触摸控制
+// 触控处理
 let lastTouchTime = 0;
 canvas.addEventListener('touchend', e => {
     const now = Date.now();
@@ -604,17 +382,70 @@ canvas.addEventListener('touchend', e => {
     e.preventDefault();
 }, { passive: false });
 
-// 方向键控制
+// 控制按钮绑定
 const controls = {
     upBtn: 'up', downBtn: 'down',
     leftBtn: 'left', rightBtn: 'right'
 };
+
 Object.entries(controls).forEach(([id, dir]) => {
-    document.getElementById(id).addEventListener('click', () => setDirection(dir));
+    const btn = document.getElementById(id);
+    btn.addEventListener('touchstart', e => {
+        e.preventDefault();
+        setDirection(dir);
+    });
+    btn.addEventListener('click', () => setDirection(dir));
 });
 
-// 初始化页面
-window.addEventListener('DOMContentLoaded', resizeCanvas);
+// 游戏控制逻辑
+const startPauseBtn = document.getElementById('startPauseBtn');
+startPauseBtn.addEventListener('click', () => {
+    if (isPaused) {
+        if (currentLevel === 0 && gameState.totalScore === 0) {
+            initGame();
+        }
+        isPaused = false;
+        startPauseBtn.textContent = '暂停';
+        startTimer();
+        lastUpdate = performance.now();
+        requestAnimationFrame(gameLoop);
+    } else {
+        isPaused = true;
+        startPauseBtn.textContent = '继续';
+        stopTimer();
+    }
+});
+
+document.getElementById('restartBtn').addEventListener('click', () => {
+    gameState.fullReset();
+    currentLevel = 0;
+    initGame();
+    startPauseBtn.textContent = '开始';
+});
+
+let lastUpdate = 0;
+function getLevelSpeed() {
+    let speed = BASE_SPEED;
+    if(currentLevel < 4) {
+        speed -= currentLevel * 18;
+    } else {
+        speed = 188;
+    }
+    return Math.max(100, speed);
+}
+
+function gameLoop(timestamp) {
+    if (!isPaused) {
+        const delta = timestamp - lastUpdate;
+        if (delta > getLevelSpeed()) {
+            update();
+            lastUpdate = timestamp;
+        }
+        requestAnimationFrame(gameLoop);
+    }
+}
+
+initGame();
 </script>
 </body>
 </html>
